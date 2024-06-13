@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  django:
+    build: . #Все настройки прописаны в Dockerfile'e
+    container_name: django
+    command: python manage.py runserver 0.0.0.0:8000 #start localhost
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgresql
+    
+  postgresql:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: her
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
+
+volumes:
+  pgdbdata: null
